@@ -1,0 +1,34 @@
+
+bg.png
+size: 2048, 1024
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+Big_Cloud
+  rotate: false
+  xy: 2, 328
+  size: 576, 324
+  orig: 576, 324
+  offset: 0, 0
+  index: -1
+Sky
+  rotate: false
+  xy: 2, 654
+  size: 576, 324
+  orig: 576, 324
+  offset: 0, 0
+  index: -1
+Skyline
+  rotate: false
+  xy: 580, 654
+  size: 576, 324
+  orig: 576, 324
+  offset: 0, 0
+  index: -1
+Small_Cloud
+  rotate: false
+  xy: 2, 2
+  size: 576, 324
+  orig: 576, 324
+  offset: 0, 0
+  index: -1
