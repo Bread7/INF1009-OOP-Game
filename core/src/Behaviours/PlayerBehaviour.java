@@ -1,10 +1,10 @@
 package Behaviours;
 
-import com.badlogic.gdx.Game;
 import com.mygdx.game.MyGdxGame;
 import Entity.Characters.*;
 import Entity.Objects.*;
 import managers.EntityManager;
+import managers.TextureManager;
 import utils.InputKeysConstants;
 
 import java.util.*;
@@ -15,6 +15,7 @@ public class PlayerBehaviour implements InputKeysConstants {
 
     // used as reference pointer
     private EntityManager entityManager;
+    private TextureManager textureManager;
     
 
     private List<Player> playerList;
@@ -22,11 +23,14 @@ public class PlayerBehaviour implements InputKeysConstants {
     private Player activePlayer;
     private float minX, maxX, maxY;
 
+    private boolean playerJustHurt, playerJustDied, bossJustDied;
+
 
     public PlayerBehaviour(final MyGdxGame app) {
         this.app = app;
 
         entityManager = this.app.getEntityManager();
+        textureManager = this.app.getTextureManager();
 
         Initialise();
         
@@ -40,6 +44,33 @@ public class PlayerBehaviour implements InputKeysConstants {
         minX = 0;
         maxX = 1260;
         maxY = activePlayer.getPositionY()+250;
+        playerJustDied = false;
+        playerJustHurt = false;
+        bossJustDied = false;
+    }
+
+    public boolean getPlayerJustDied() {
+        return playerJustDied;
+    }
+
+    public boolean getPlayerJustHurt() {
+        return playerJustHurt;
+    }
+
+    public boolean getBossJustDied() {
+        return bossJustDied;
+    }
+
+    public void setPlayerJustDied(boolean bool) {
+        playerJustDied = bool;
+    }
+
+    public void setPlayerJustHurt(boolean bool) {
+        playerJustHurt = bool;
+    }
+
+    public void setBossJustDied(boolean bool) {
+        bossJustDied = bool;
     }
 
     //----------------------------------------------------------------------------------------
@@ -60,6 +91,9 @@ public class PlayerBehaviour implements InputKeysConstants {
         }
         if (keycode == aKey) {
             if (x - speed > minX) {
+                if (textureManager.getPlayerTextureDirection() == rightDirection) {
+                    textureManager.flipPlayerTextures();
+                }
                 activePlayer.setPositionX(x - speed);
                 activePlayer.getCollideBox().setX(x - speed);
                 activePlayer.setDirection(leftDirection);
@@ -72,6 +106,9 @@ public class PlayerBehaviour implements InputKeysConstants {
         }
         if (keycode == dKey) {
             if (x + speed < maxX) {
+                if (textureManager.getPlayerTextureDirection() == leftDirection) {
+                    textureManager.flipPlayerTextures();
+                }
                 activePlayer.setPositionX(x + speed);
                 activePlayer.getCollideBox().setX(x + speed);
                 activePlayer.setDirection(rightDirection);
@@ -114,24 +151,22 @@ public class PlayerBehaviour implements InputKeysConstants {
     public void playerTouchBoss(Boss boss) {
         if (boss.getStatus() == false) {
             float bossTopY = boss.getCollideBox().getY() + ( boss.getCollideBox().getHeight() / 2);
-            // float bossLeftX = boss.getCollideBox().getX() - ( boss.getCollideBox().getWidth() / 2 );
-            // float bossRightX = boss.getCollideBox().getX() + ( boss.getCollideBox().getWidth() / 2 );
-
             float playerBottomY = activePlayer.getCollideBox().getY() - (activePlayer.getCollideBox().getHeight() / 2);
-            // float playerLeftX = activePlayer.getCollideBox().getX() - (activePlayer.getCollideBox().getWidth() / 2);
-            // float playerRightX = activePlayer.getCollideBox().getX() + (activePlayer.getCollideBox().getWidth() / 2);
 
             if (playerBottomY >= bossTopY) {
                 // player kill boss
-                System.out.print(" on top ");
+                bossJustDied = true;
                 this.app.getBehaviourManager().getNPCBehaviour().bossDie();
             } else {
                 // player get damage
                 if (activePlayer.getHealth()>0) {
-                    System.out.print("hurt ");
+                    playerJustHurt = true;
                     activePlayer.setHealth(activePlayer.getHealth() - 1);
                     activePlayer.setPositionX(activePlayer.getPositionX() - activePlayer.getSpeed() * 40);
                     activePlayer.getCollideBox().setX(activePlayer.getCollideBox().getX() - activePlayer.getSpeed() * 40);
+                }
+                if (activePlayer.getHealth() == 0) {
+                    activePlayer.setStatus();
                 }
             }
         }
@@ -139,17 +174,13 @@ public class PlayerBehaviour implements InputKeysConstants {
     }
 
     public void winGame(Podium podium) {
-        System.out.print("game won");
         podium.standOnPodium();
         evadeBrick();
     }
 
     public void playerDie(Player player) {
+        playerJustDied = true;
         player.setStatus();
-        // playerList.remove(activePlayer);
     }
-
-    
-    // public void consume
     
 }

@@ -47,17 +47,4 @@ public class Boss extends Actor{
     public void setSpeed(int speed) {
         this.speed = speed;
     }
-
-
-    public void die() {
-        this.isDead = true;
-        // app.genericAssetsManager.loadAsset("Music/gameOver.mp3", Sound.class);
-        // app.audioManager.playSound("Music/gameOver.mp3");
-    }
-
-    // // stop music
-    //    public void stopMusic()
-    // {
-    //     app.audioManager.stopMusic();
-    // }
 }

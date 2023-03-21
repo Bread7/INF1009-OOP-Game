@@ -3,7 +3,6 @@ package managers;
 import Screens.*;
 import com.mygdx.game.MyGdxGame;
 
-import java.awt.*;
 import java.util.HashMap;
 
 public class GameScreenManager {
@@ -41,6 +40,13 @@ public class GameScreenManager {
     public STATE getActiveScreen() {
         return activeScreen;
     }
+
+    public void restartGameScreen() {
+        this.GameScreens.remove(STATE.GAME_SCREEN);
+        // this.GameScreens.remove(STATE.GAME_SCREEN, GameScreen(app));
+        this.GameScreens.put(STATE.GAME_SCREEN, new GameScreen(app));
+    }
+
 
     public void dispose(){
         for(BaseScreen screen : GameScreens.values()) {

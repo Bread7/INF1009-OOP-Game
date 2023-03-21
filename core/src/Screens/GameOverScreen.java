@@ -2,10 +2,7 @@ package Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -15,14 +12,18 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.MyGdxGame;
 import managers.GameScreenManager;
+import utils.InputKeysConstants;
 import utils.Settings;
+import Entity.Characters.*;
+import Entity.Objects.*;
+import java.util.List;
+import com.badlogic.gdx.scenes.scene2d.utils.*;
 
-public class GameOverScreen extends BaseScreen {
+public class GameOverScreen extends BaseScreen implements InputKeysConstants {
 
     private Viewport viewport;
     private Stage stage;
@@ -30,11 +31,10 @@ public class GameOverScreen extends BaseScreen {
     private Sprite background;
     private Label scoreLabel;
     private Label highScoreLabel;
-    private Label gameOverLabel;
+    private Label titleLabel;
     private Label playAgainLabel;
     private Table table;
     private BitmapFont font;
-    private BitmapFont gameOver_font;
     private int score;
     private int highScore;
     private Skin skin;
@@ -43,11 +43,11 @@ public class GameOverScreen extends BaseScreen {
 
     public GameOverScreen(final MyGdxGame app) {
         super(app);
-        this.highScore = Settings.getHighestScore();
 
         viewport = new ScreenViewport();
         stage = new Stage(viewport);
         batch = new SpriteBatch();
+
 
         // Load background image
       //  background = new Sprite(new Texture("gameover_bg.png"));
@@ -62,6 +62,8 @@ public class GameOverScreen extends BaseScreen {
         font = skin.getFont("font");
         font.getData().setScale(2f);
 
+        titleLabel = new Label("GAME OVER", new Label.LabelStyle(font, Color.WHITE));
+
 
         // Create table to hold labels and buttons
         table = new Table();
@@ -69,35 +71,32 @@ public class GameOverScreen extends BaseScreen {
         table.setFillParent(true);
 
         // Create labels
-        gameOverLabel = new Label("GAME OVER", new Label.LabelStyle(font, Color.WHITE));
         scoreLabel = new Label("Your Score: " + score, new Label.LabelStyle(font, Color.WHITE));
         highScoreLabel = new Label("High Score: " + highScore, new Label.LabelStyle(font, Color.WHITE));
         playAgainLabel = new Label("Play Again", new Label.LabelStyle(font, Color.WHITE));
-
-        playAgainLabel.addListener(new com.badlogic.gdx.scenes.scene2d.InputListener() {
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+        playAgainLabel.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
                 // Play sound effect
-
                 // Switch to game screen
-                System.out.println("Play Again Clicked");
+                app.restartGame();
                 app.getGameScreenManager().setScreen(GameScreenManager.STATE.GAME_SCREEN);
-                return true;
             }
         });
 
         // fade-in effect for the labels
-        gameOverLabel.getColor().a = 0f;
+        titleLabel.getColor().a = 0f;
         scoreLabel.getColor().a = 0f;
         highScoreLabel.getColor().a = 0f;
         playAgainLabel.getColor().a = 0f;
 
-        gameOverLabel.addAction(Actions.fadeIn(3.0f));
+        titleLabel.addAction(Actions.fadeIn(3.0f));
         scoreLabel.addAction(Actions.fadeIn(3.0f));
         highScoreLabel.addAction(Actions.fadeIn(3.0f));
         playAgainLabel.addAction(Actions.fadeIn(3.0f));
 
         // Add labels to table
-        table.add(gameOverLabel).colspan(2).padBottom(50f).row();
+        table.add(titleLabel).colspan(2).padBottom(50f).row();
         table.add(scoreLabel).expandX().padBottom(20f);
         table.add(highScoreLabel).expandX().padBottom(20f).row();
         table.add(playAgainLabel).colspan(2).padTop(20f);
@@ -113,7 +112,7 @@ public class GameOverScreen extends BaseScreen {
 
     @Override
     public void show() {
-
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
@@ -132,6 +131,24 @@ public class GameOverScreen extends BaseScreen {
 
     @Override
     public void update(float delta) {
+        // set highscore if won
+        this.highScore = Settings.getHighestScore();
+        score = highScore;
+        scoreLabel.setText("Your Score: " + score);
+        List<Player> playerList = this.app.getEntityManager().getPlayerList();
+        List<Podium> podiumList = this.app.getEntityManager().getPodiumList();
+
+        // display text if won/loss
+        for (int i = 0; i < playerList.size(); i++) {
+            if (playerList.get(i).getStatus() == true) {
+                titleLabel.setText("GAME OVER");
+            }
+        }
+        for (int i = 0; i < podiumList.size(); i++) {
+            if (podiumList.get(i).checkPodium() == true) {
+                titleLabel.setText("YOU WIN");
+            }
+        }
 
     }
 

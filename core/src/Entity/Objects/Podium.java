@@ -1,7 +1,6 @@
 package Entity.Objects;
-import com.badlogic.gdx.math.Rectangle;
-import com.mygdx.game.MyGdxGame;
 
+import com.badlogic.gdx.math.Rectangle;
 
 public class Podium extends Static{
     private Boolean onTop = false;
@@ -15,7 +14,11 @@ public class Podium extends Static{
     }
 
     public void standOnPodium() {
-        this.onTop = true;
+        if (onTop) {
+            onTop = false;
+        } else {
+            onTop = true;
+        }
     }
     
 }

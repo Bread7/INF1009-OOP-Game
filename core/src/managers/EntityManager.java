@@ -62,15 +62,17 @@ public class EntityManager implements SurfaceAreaBox, MapBricks {
     }
 
     private void createItems() {
-        Rectangle collideBox = new Rectangle(300, 23, unhealthyFoodWidth, unhealthyFoodHeight);
-        unhealthyFood = new UnhealthyFood(300, 23, collideBox, false, app.getInputManager().randomDirection(), 0.5f);
+        Rectangle unhealthyCollideBox = new Rectangle(521, 23, unhealthyFoodWidth, unhealthyFoodHeight);
+        unhealthyFood = new UnhealthyFood(500, 23, unhealthyCollideBox, false, app.getInputManager().randomDirection(), 0.5f);
         unhealthyFoodList.add(unhealthyFood);
-        collideBox = new Rectangle(150, 13, healthyFoodWidth, healthyFoodHeight);
-        healthFood = new HealthFood(150, 13, collideBox, false, 0.5f);
+
+        Rectangle healthFoodCollideBox = new Rectangle(262, 25, healthyFoodWidth, healthyFoodHeight);
+        healthFood = new HealthFood(250, 13, healthFoodCollideBox, false, 0.5f);
         healthFoodList.add(healthFood);
     }
 
     private void createStatics() {
+        // base layer bricks and podiums
         float updateBrickX = initialBrickX;
         float updateBrickX2 = secondBrickX;
         float updatePodiumX = initialPodiumX;
@@ -80,7 +82,7 @@ public class EntityManager implements SurfaceAreaBox, MapBricks {
             podiumList.add(podium);
             updatePodiumX += distance;
         }
-        for (int i = 0; i < brickQty; i++) {
+        for (int i = 0; i < brickBaseQty; i++) {
             if (i > brickLayer1Qty + 1) {
                 Rectangle collideBox = new Rectangle(updateBrickX2, defaultBrickY, brickWidth, brickHeight);
                 brick = new Brick(updateBrickX2, defaultBrickY, collideBox, false);
@@ -90,6 +92,41 @@ public class EntityManager implements SurfaceAreaBox, MapBricks {
             }
             Rectangle collideBox = new Rectangle(updateBrickX, defaultBrickY, brickWidth, brickHeight);
             brick = new Brick(updateBrickX, defaultBrickY, collideBox, false);
+            brickList.add(brick);
+            updateBrickX += distance;
+        }
+
+        // adding vertical bricks to form a maze
+        updateBrickX = vertInitialBrickX;
+        float updateBrickY = vertInitialBrickY;
+        for (int i = 0; i < vertBrick1Qty; i++) {
+            Rectangle collideBox = new Rectangle(vertInitialBrickX, updateBrickY, brickWidth, brickHeight);
+            brick = new Brick(vertInitialBrickX, updateBrickY, collideBox, false);
+            brickList.add(brick);
+            updateBrickY += distance;
+        }
+
+        updateBrickY = vertInitialBrickY2;
+        for (int i = 0; i < vertBrick2Qty; i++) {
+            Rectangle collideBox = new Rectangle(vertInitialBrickX2, updateBrickY, brickWidth, brickHeight);
+            brick = new Brick(vertInitialBrickX2, updateBrickY, collideBox, false);
+            brickList.add(brick);
+            updateBrickY += distance;
+        }
+
+        updateBrickY = vertInitialBrickY3;
+        for (int i = 0; i < vertBrick3Qty; i++) {
+            Rectangle collideBox = new Rectangle(vertInitialBrickX3, updateBrickY, brickWidth, brickHeight);
+            brick = new Brick(vertInitialBrickX3, updateBrickY, collideBox, false);
+            brickList.add(brick);
+            updateBrickY += distance;
+        }
+
+        // adding ceiling bricks
+        updateBrickX = ceilDefaultX;
+        for (int i = 0; i < ceilBrickQty; i++) {
+            Rectangle collideBox = new Rectangle(updateBrickX, ceilDefaultY, brickWidth, brickHeight);
+            brick = new Brick(updateBrickX, ceilDefaultY, collideBox, false);
             brickList.add(brick);
             updateBrickX += distance;
         }
@@ -147,6 +184,34 @@ public class EntityManager implements SurfaceAreaBox, MapBricks {
     public UnhealthyFood getUnhealthyFood() {
         return unhealthyFood;
     }
-        
+    
+    public void restartEntity() {
+        // refresh player
+        for (int i = 0; i < playerList.size(); i++) {
+            if (playerList.get(i).getStatus()) {
+                playerList.get(i).setStatus();
+            }
+            playerList.get(i).setHealth(3);
+            playerList.get(i).setSpeed(3);
+            playerList.get(i).setPositionX(20);
+            playerList.get(i).setPositionY(24);
+            playerList.get(i).getCollideBox().setX(playerList.get(i).getPositionX());
+            playerList.get(i).getCollideBox().setY(playerList.get(i).getPositionY());
+        }
+
+        // refresh boss
+        for (int i = 0; i < bossList.size(); i++) {
+            if (bossList.get(i).getStatus()) {
+                bossList.get(i).setStatus();
+            }
+        }
+
+        // refresh podium
+        for (int i = 0; i < podiumList.size(); i++) {
+            if (podiumList.get(i).checkPodium()) {
+                podiumList.get(i).standOnPodium();
+            }
+        }
+    }
 }
 

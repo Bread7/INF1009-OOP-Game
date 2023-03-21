@@ -18,6 +18,7 @@ public class Hud implements Disposable {
     private Integer worldTimer;
     private float timeCount;
     private static Integer score;
+    private float speed;
 
     private Label countdownLabel;
     private static Label scoreLabel;
@@ -25,6 +26,7 @@ public class Hud implements Disposable {
     private Label levelLabel;
     private Label worldLabel;
     private Label nameLabel;
+    private Label speedLabel;
 
     //Healthy Warrior score/time Tracking Variables
 
@@ -48,7 +50,9 @@ public class Hud implements Disposable {
         timeLabel = new Label("TIME", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         levelLabel = new Label("LEVEL 1", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         worldLabel = new Label("WORLD", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        nameLabel= new Label("Healthy Warrior", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        nameLabel = new Label("Healthy Warrior", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        speedLabel = new Label("Speed: " + speed, new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+
         table.add(nameLabel).expandX().padTop(10);
         table.add(worldLabel).expandX().padTop(10);
         table.add(timeLabel).expandX().padTop(10);
@@ -56,10 +60,16 @@ public class Hud implements Disposable {
         table.add(scoreLabel).expandX();
         table.add(levelLabel).expandX();
         table.add(countdownLabel).expandX();
+        table.row();
+        table.add(speedLabel).expandX();
 
         // add table to stage
         stage.addActor(table);
 
+    }
+
+    public void setPlayerSpeed(float speed) {
+        this.speed = speed;
     }
 
     public void update(float dt){
@@ -73,6 +83,7 @@ public class Hud implements Disposable {
             countdownLabel.setText(String.format("%03d", worldTimer));
             timeCount = 0;
         }
+        speedLabel.setText("Speed: " + speed);
     }
 
     public static void addScore(int value){
@@ -83,4 +94,8 @@ public class Hud implements Disposable {
     public void dispose() { stage.dispose(); }
 
     public boolean isTimeUp() { return timeUp; }
+    
+    public Integer getWorldTime() {
+        return worldTimer;
+    }
 }

@@ -80,18 +80,5 @@ public class Player extends Actor{
             setPositionY(y);
         }
     }
-
-    // public void die() {
-    //     this.isDead = true;
-    //     //play sound for player death
-    //     app.genericAssetsManager.loadAsset("Music/gameOver.mp3", Sound.class);
-    //     app.audioManager.playSound("Music/gameOver.mp3");
-    // }
-
-    // // stop music
-    // public void stopMusic()
-    // {
-    //     app.audioManager.stopMusic();
-    // }
     
 }

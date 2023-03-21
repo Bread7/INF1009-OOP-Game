@@ -1,15 +1,7 @@
 package managers;
 
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
-// import com.badlogic.gdx.InputProcessor;
-// import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.Input.Keys;
-
-// import java.util.random.*;
-
 import com.mygdx.game.MyGdxGame;
-
 import Behaviours.PlayerBehaviour;
 import managers.GameScreenManager.STATE;
 import utils.InputKeysConstants;
@@ -38,8 +30,6 @@ public class InputManager extends InputAdapter implements InputKeysConstants {
     // check for long press and set active key
     private boolean keyHold = false;
     private int activeKey = 0;
-    // private int activeKey2 = 0;
-    // private int activeKey3 = 0;
 
     private final MyGdxGame app;
 
@@ -95,7 +85,7 @@ public class InputManager extends InputAdapter implements InputKeysConstants {
         return false;
     }
 
-    private void forceKeyRelease() {
+    public void forceKeyRelease() {
         setActiveKey(0);
         setKeyHold(false);
     }

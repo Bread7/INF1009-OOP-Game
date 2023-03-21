@@ -1,7 +1,5 @@
 package Entity.Objects;
 
-import com.badlogic.gdx.Game;
-import com.mygdx.game.MyGdxGame;
 import com.badlogic.gdx.math.Rectangle;
 
 public class Item extends GameObject{

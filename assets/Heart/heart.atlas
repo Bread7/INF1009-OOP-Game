@@ -1,0 +1,13 @@
+
+heart.png
+size: 64, 32
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+heart
+  rotate: false
+  xy: 2, 2
+  size: 48, 16
+  orig: 48, 16
+  offset: 0, 0
+  index: -1

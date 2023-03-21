@@ -1,6 +1,5 @@
 package Entity.Objects;
 
-import com.mygdx.game.MyGdxGame;
 import com.badlogic.gdx.math.Rectangle;
 
 public class UnhealthyFood extends Item{

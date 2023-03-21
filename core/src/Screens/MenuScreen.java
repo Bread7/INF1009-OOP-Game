@@ -1,24 +1,17 @@
 package Screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.physics.bullet.collision.memcopy_elements_func;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.MyGdxGame;
 import managers.GameScreenManager;
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 
 import managers.InputManager;
 
@@ -72,8 +65,6 @@ public class MenuScreen extends BaseScreen{
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
                 app.getAudioManager().playSound("Music/click.mp3");
                 app.getGameScreenManager().setScreen(GameScreenManager.STATE.GAME_SCREEN);
-                // System.out.print(app.getGameScreenManager());
-                // System.out.print(app.getEntityManager());
                 System.out.println("Play has been clicked"); //debugging
             }
         });

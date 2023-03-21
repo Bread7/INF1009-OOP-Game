@@ -1,9 +1,6 @@
 package Entity.Objects;
 
 import com.badlogic.gdx.math.Rectangle;
-import com.mygdx.game.MyGdxGame;
-import com.mygdx.game.MyGdxGame;
-
 
 public class Static extends GameObject{
     private Boolean isBreakable;

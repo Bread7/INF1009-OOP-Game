@@ -1,7 +1,6 @@
 package Entity.Objects;
 
 import com.badlogic.gdx.math.Rectangle;
-import com.mygdx.game.MyGdxGame;
 
 public class HealthFood extends Item{
     private float addSpeed;

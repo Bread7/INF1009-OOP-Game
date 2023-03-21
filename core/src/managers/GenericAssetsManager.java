@@ -1,32 +1,20 @@
 package managers;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetLoaderParameters;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.assets.loaders.SkinLoader;
-import com.badlogic.gdx.assets.loaders.TextureAtlasLoader;
-import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-// import com.sun.tools.javac.jvm.Gen;
 
 public class GenericAssetsManager{
 
     public AssetManager manager;
 
     //public static final AssetDescriptor<Skin> uiskin = new AssetDescriptor<Skin>("uiskin.json", Skin.class,new SkinLoader.SkinParameter("uiskin.atlas"));
-    // public static final AssetDescriptor<TextureAtlas> bg = new AssetDescriptor<TextureAtlas>("Bg/bg.atlas", TextureAtlas.class);
-    // public static final AssetDescriptor<TextureAtlas> boss = new AssetDescriptor<TextureAtlas>("Boss/boss.atlas", TextureAtlas.class);
-    // public static final AssetDescriptor<TextureAtlas> food = new AssetDescriptor<TextureAtlas>("Food/food.atlas", TextureAtlas.class);
-    // public static final AssetDescriptor<TextureAtlas> player = new AssetDescriptor<TextureAtlas>("Player/player.atlas", TextureAtlas.class);
-    // public static final AssetDescriptor<TextureAtlas> tile = new AssetDescriptor<TextureAtlas>("Tile/tile.atlas", TextureAtlas.class);
 
     public GenericAssetsManager(AssetManager manager) {
         this.manager = manager;
@@ -71,11 +59,6 @@ public class GenericAssetsManager{
     public void loadAll()
     {
        // manager.load(uiskin);
-        // manager.load(bg);
-        // manager.load(boss);
-        // manager.load(food);
-        // manager.load(player);
-        // manager.load(tile);
         //manager.load("theme_music.ogg", Music.class);
     }
 

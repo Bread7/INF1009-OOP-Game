@@ -5,17 +5,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.physics.bullet.collision.Collision;
-import com.badlogic.gdx.physics.bullet.linearmath.int4;
 
-import Entity.Characters.Boss;
-import Entity.Characters.Player;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 
 import managers.AudioManager;
 import managers.BehaviourManager;
@@ -23,7 +14,6 @@ import managers.CollisionManager;
 import managers.EntityManager;
 import managers.GameScreenManager;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
@@ -75,6 +65,7 @@ public class MyGdxGame extends Game {
 		genericAssetsManager.loadAsset("Food/food.atlas", TextureAtlas.class);
 		genericAssetsManager.loadAsset("Player/player.atlas", TextureAtlas.class);
 		genericAssetsManager.loadAsset("Tile/tile.atlas", TextureAtlas.class);
+		genericAssetsManager.loadAsset("Heart/heart.atlas", TextureAtlas.class);
 		
 		// background music
 		genericAssetsManager.loadAsset("Music/theme_music.ogg", Music.class);
@@ -143,6 +134,12 @@ public class MyGdxGame extends Game {
 
 	public CollisionManager getCollisionManager() {
 		return collisionManager;
+	}
+
+	public void restartGame() {
+		// restart player health and status and boss status
+		entityManager.restartEntity();
+		gameScreenManager.restartGameScreen();
 	}
 
 }

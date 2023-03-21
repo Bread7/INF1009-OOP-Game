@@ -10,7 +10,7 @@ public interface SurfaceAreaBox {
     public static float playerHeight = 27;
 
     public static float unhealthyFoodWidth = 20;
-    public static float unhealthyFoodHeight = 35;
+    public static float unhealthyFoodHeight = 45;
     
     public static float healthyFoodWidth = 42;
     public static float healthyFoodHeight = 37;

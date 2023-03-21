@@ -9,11 +9,6 @@ import Entity.Characters.*;
 import Entity.Objects.*;
 import java.util.*;
 
-// public interface CollisionManager {
-// public void handlecollision(float x1, float y1, float x2, float y2);
-// public void reacttocollision();
-// }
-
 public class CollisionManager {
 
     private final MyGdxGame app;
@@ -36,8 +31,7 @@ public class CollisionManager {
 
     public CollisionManager(final MyGdxGame app) {
         this.app = app;
-        // activePlayerArea = new Rectangle();
-        // activeBossArea = new Rectangle();
+        
         Initialise();
     }
 
@@ -64,17 +58,11 @@ public class CollisionManager {
         return false;
     }
 
-    // public boolean playerCollisionCheck() {
-
-    // }
-
     public boolean playerCollideBrick() {
         for (int i = 0; i < brickList.size(); i++) {
             Rectangle brickArea = brickList.get(i).getCollideBox();
             boolean collided = collisionCheck(activePlayerArea, brickArea);
-            // System.out.print(bool);
             if (collided) {
-                // System.out.print("collision with brick ");
                 return true;
             }
         }
@@ -86,12 +74,10 @@ public class CollisionManager {
             Rectangle podiumArea = podiumList.get(i).getCollideBox();
             boolean collided = collisionCheck(activePlayerArea, podiumArea);
             if (collided) {
-                // System.out.print("collision with podium ");
                 podium = podiumList.get(i);
                 return true;
             }
         }
-        // for (int i = 0;)
         return false;
     }
 
@@ -99,7 +85,6 @@ public class CollisionManager {
         if (activeBossArea != null && activePlayerArea != null) {
             boolean collided = collisionCheck(activePlayerArea, activeBossArea);
             if (collided) {
-                // System.out.print("collision with boss ");
                 return true;
             }
         }
@@ -107,11 +92,11 @@ public class CollisionManager {
     }
 
     public boolean playerCollideUnhealthyFood() {
+        activePlayerArea = activePlayer.getCollideBox();
         for (int i = 0; i < unhealthyFoodList.size(); i++) {
             Rectangle unhealthyFoodArea = unhealthyFoodList.get(i).getCollideBox();
             boolean collided = collisionCheck(activePlayerArea, unhealthyFoodArea);
             if (collided) {
-                // System.out.print("collision with soda ");
                 eatUnhealthyFood = unhealthyFoodList.get(i);
                 return true;
             }
@@ -124,7 +109,6 @@ public class CollisionManager {
             Rectangle healthFoodArea = healthFoodList.get(i).getCollideBox();
             boolean collided = collisionCheck(activePlayerArea, healthFoodArea);
             if (collided) {
-                // System.out.print("collision with cabbage ");
                 eatHealthyFood = healthFoodList.get(i);
                 return true;
             }

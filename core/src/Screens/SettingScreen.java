@@ -12,7 +12,6 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.MyGdxGame;
 
 import managers.InputManager;
-import com.badlogic.gdx.Gdx;
 
 import managers.GameScreenManager;
 import utils.ScrollingBackground;
